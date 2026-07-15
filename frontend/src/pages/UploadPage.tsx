@@ -61,8 +61,8 @@ export default function UploadPage() {
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold">Upload Resume</h1>
-        <p className="mt-1 text-gray-500">Upload PDF or DOCX files for AI analysis</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">Upload Resume</h1>
+        <p className="mt-1 text-slate-500 dark:text-slate-400">Upload PDF or DOCX files for AI analysis</p>
       </div>
 
       <div className="card">
@@ -77,9 +77,9 @@ export default function UploadPage() {
 
       <div className="card">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg font-semibold">Your Resumes ({total})</h2>
+          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">Your Resumes ({total})</h2>
           <div className="relative">
-            <FiSearch className="absolute left-3 top-3 text-gray-400" />
+            <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search resumes..."
@@ -93,28 +93,28 @@ export default function UploadPage() {
         {loading ? (
           <div className="flex justify-center py-12"><LoadingSpinner /></div>
         ) : resumes.length === 0 ? (
-          <p className="py-8 text-center text-gray-500">No resumes uploaded yet</p>
+          <p className="py-12 text-center text-slate-500 dark:text-slate-400 font-medium">No resumes uploaded yet. Upload one above!</p>
         ) : (
           <>
             <div className="space-y-4">
               {resumes.map((resume) => (
-                <div key={resume.id} className="rounded-lg border border-gray-100 p-4 dark:border-gray-800">
+                <div key={resume.id} className="rounded-xl border border-slate-150 dark:border-slate-800/80 p-5 bg-slate-50/30 dark:bg-slate-900/10 hover:shadow-sm transition-all duration-200">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="font-medium">{resume.original_filename}</h3>
-                      <p className="text-sm text-gray-500">
+                      <h3 className="font-bold text-slate-800 dark:text-slate-200 text-base">{resume.original_filename}</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                         {resume.file_type.toUpperCase()} · {formatFileSize(resume.file_size)} · {formatDate(resume.created_at)}
                       </p>
                       {resume.parsed_data?.name && (
-                        <p className="mt-1 text-sm text-primary-600">{resume.parsed_data.name}</p>
+                        <p className="mt-2 text-sm font-semibold text-primary-600 dark:text-primary-400">{resume.parsed_data.name}</p>
                       )}
                     </div>
-                    <button onClick={() => handleDelete(resume.id)} className="rounded-lg p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
-                      <FiTrash2 />
+                    <button onClick={() => handleDelete(resume.id)} className="rounded-xl p-2.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer" aria-label="Delete Resume">
+                      <FiTrash2 size={16} />
                     </button>
                   </div>
                   {resume.parsed_data?.skills && resume.parsed_data.skills.length > 0 && (
-                    <div className="mt-3">
+                    <div className="mt-4 border-t border-slate-100 dark:border-slate-800/40 pt-3">
                       <SkillTags skills={resume.parsed_data.skills} max={8} />
                     </div>
                   )}

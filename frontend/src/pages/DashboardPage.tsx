@@ -13,10 +13,12 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { dashboardAPI } from '../services/api';
 import { formatDate } from '../utils/helpers';
 import type { DashboardStats } from '../types';
+import { useTheme } from '../hooks/useTheme';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const { theme } = useTheme();
 
   useEffect(() => {
     dashboardAPI.getStats()
@@ -35,11 +37,22 @@ export default function DashboardPage() {
 
   if (!stats) return null;
 
+  const isDark = theme === 'dark';
+  const chartColors = {
+    grid: isDark ? '#1e293b' : '#e2e8f0',
+    text: isDark ? '#94a3b8' : '#64748b',
+    primary: '#7c3aed', // violet-600
+    tooltipBg: isDark ? '#1e293b' : '#ffffff',
+    tooltipBorder: isDark ? '#334155' : '#e2e8f0',
+    tooltipText: isDark ? '#f8fafc' : '#0f172a',
+    radarGrid: isDark ? '#334155' : '#cbd5e1',
+  };
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-        <p className="mt-1 text-gray-500">Track your resume performance and improvements</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">Dashboard</h1>
+        <p className="mt-1 text-slate-500 dark:text-slate-400">Track your resume performance and improvements</p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -51,77 +64,77 @@ export default function DashboardPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="card">
-          <h2 className="mb-4 text-lg font-semibold">ATS Score Trend</h2>
+          <h2 className="mb-4 text-lg font-bold text-slate-800 dark:text-slate-200">ATS Score Trend</h2>
           {stats.ats_score_trend.length > 0 ? (
             <ResponsiveContainer width="100%" height={280}>
               <LineChart data={stats.ats_score_trend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
-                <Tooltip contentStyle={{ background: '#1f2937', border: 'none', borderRadius: 8 }} />
-                <Line type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={2} dot={{ r: 4 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke={chartColors.grid} />
+                <XAxis dataKey="date" tick={{ fontSize: 12, fill: chartColors.text }} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: chartColors.text }} />
+                <Tooltip contentStyle={{ background: chartColors.tooltipBg, border: `1px solid ${chartColors.tooltipBorder}`, borderRadius: 8, color: chartColors.tooltipText }} />
+                <Line type="monotone" dataKey="score" stroke={chartColors.primary} strokeWidth={2.5} dot={{ r: 4, strokeWidth: 2, fill: chartColors.tooltipBg }} />
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <p className="py-12 text-center text-gray-500">No analysis data yet. Upload and analyze a resume!</p>
+            <p className="py-12 text-center text-slate-500">No analysis data yet. Upload and analyze a resume!</p>
           )}
         </div>
 
         <div className="card">
-          <h2 className="mb-4 text-lg font-semibold">Skill Distribution</h2>
+          <h2 className="mb-4 text-lg font-bold text-slate-800 dark:text-slate-200">Skill Distribution</h2>
           {stats.skill_distribution.length > 0 ? (
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={stats.skill_distribution.slice(0, 8)} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis type="number" tick={{ fontSize: 12 }} />
-                <YAxis dataKey="skill" type="category" width={100} tick={{ fontSize: 11 }} />
-                <Tooltip contentStyle={{ background: '#1f2937', border: 'none', borderRadius: 8 }} />
-                <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke={chartColors.grid} />
+                <XAxis type="number" tick={{ fontSize: 12, fill: chartColors.text }} />
+                <YAxis dataKey="skill" type="category" width={100} tick={{ fontSize: 11, fill: chartColors.text }} />
+                <Tooltip contentStyle={{ background: chartColors.tooltipBg, border: `1px solid ${chartColors.tooltipBorder}`, borderRadius: 8, color: chartColors.tooltipText }} />
+                <Bar dataKey="count" fill={chartColors.primary} radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <p className="py-12 text-center text-gray-500">Upload resumes to see skill analytics</p>
+            <p className="py-12 text-center text-slate-500">Upload resumes to see skill analytics</p>
           )}
         </div>
 
         <div className="card">
-          <h2 className="mb-4 text-lg font-semibold">Score Breakdown Radar</h2>
+          <h2 className="mb-4 text-lg font-bold text-slate-800 dark:text-slate-200">Score Breakdown Radar</h2>
           {stats.skill_radar.length > 0 ? (
             <ResponsiveContainer width="100%" height={280}>
               <RadarChart data={stats.skill_radar}>
-                <PolarGrid stroke="#374151" />
-                <PolarAngleAxis dataKey="category" tick={{ fontSize: 10 }} />
-                <PolarRadiusAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
-                <Radar name="Score" dataKey="score" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
+                <PolarGrid stroke={chartColors.radarGrid} />
+                <PolarAngleAxis dataKey="category" tick={{ fontSize: 10, fill: chartColors.text }} />
+                <PolarRadiusAxis domain={[0, 100]} tick={{ fontSize: 10, fill: chartColors.text }} />
+                <Radar name="Score" dataKey="score" stroke={chartColors.primary} fill={chartColors.primary} fillOpacity={0.25} />
               </RadarChart>
             </ResponsiveContainer>
           ) : (
-            <p className="py-12 text-center text-gray-500">Run an analysis to see score breakdown</p>
+            <p className="py-12 text-center text-slate-500">Run an analysis to see score breakdown</p>
           )}
         </div>
 
         <div className="card">
-          <h2 className="mb-4 text-lg font-semibold">Recent Analyses</h2>
+          <h2 className="mb-4 text-lg font-bold text-slate-800 dark:text-slate-200">Recent Analyses</h2>
           {stats.recent_analyses.length > 0 ? (
             <div className="space-y-3">
               {stats.recent_analyses.map((a) => (
                 <Link
                   key={a.id}
                   to={`/history/${a.id}`}
-                  className="flex items-center justify-between rounded-lg border border-gray-100 p-3 transition hover:border-primary-300 dark:border-gray-800 dark:hover:border-primary-700"
+                  className="flex items-center justify-between rounded-xl border border-slate-100 p-4 transition-all duration-200 hover:border-primary-300 dark:border-slate-800 dark:hover:border-primary-700 bg-slate-50/50 hover:bg-slate-50 dark:bg-slate-900/30 dark:hover:bg-slate-900/70"
                 >
                   <div>
-                    <p className="font-medium capitalize">{a.analysis_type} Analysis</p>
-                    <p className="text-xs text-gray-500">{formatDate(a.created_at)}</p>
+                    <p className="font-semibold text-slate-800 dark:text-slate-200 capitalize">{a.analysis_type} Analysis</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{formatDate(a.created_at)}</p>
                   </div>
-                  <span className="rounded-full bg-primary-100 px-3 py-1 text-sm font-bold text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
+                  <span className="rounded-full bg-primary-50 px-3 py-1 text-sm font-bold text-primary-700 dark:bg-primary-950/40 dark:text-primary-400 border border-primary-100 dark:border-primary-900/20">
                     {Math.round(a.ats_score)}%
                   </span>
                 </Link>
               ))}
             </div>
           ) : (
-            <p className="py-12 text-center text-gray-500">No recent analyses</p>
+            <p className="py-12 text-center text-slate-500">No recent analyses</p>
           )}
         </div>
       </div>

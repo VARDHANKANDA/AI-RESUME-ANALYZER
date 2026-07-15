@@ -2,8 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, String, Text
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import DateTime, ForeignKey, String, Text, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -17,7 +16,7 @@ class JobDescription(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False, default="Untitled Job")
     raw_text: Mapped[str] = mapped_column(Text, nullable=False)
     filename: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    parsed_data: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    parsed_data: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     # required_skills, responsibilities, qualifications, experience, preferred_technologies
 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

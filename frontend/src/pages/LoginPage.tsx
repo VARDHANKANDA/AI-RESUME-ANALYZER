@@ -32,67 +32,67 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#09090B] p-4 text-[#FAFAFA] selection:bg-[#8B5CF6]/30 relative overflow-hidden">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-[#0b0f19] p-4 text-slate-900 dark:text-slate-100 selection:bg-primary-500/30 relative overflow-hidden transition-colors duration-300">
       {/* Background decorations */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#8B5CF6]/20 rounded-full blur-[128px] -z-10 mix-blend-screen pointer-events-none animate-pulse"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#06B6D4]/10 rounded-full blur-[128px] -z-10 mix-blend-screen pointer-events-none"></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/10 dark:bg-primary-500/20 rounded-full blur-[128px] -z-10 mix-blend-screen pointer-events-none animate-pulse"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/10 rounded-full blur-[128px] -z-10 mix-blend-screen pointer-events-none"></div>
 
       <div className="w-full max-w-[420px] animate-fade-in z-10 relative">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#8B5CF6] to-[#06B6D4] text-2xl font-bold text-white shadow-[0_0_24px_rgba(139,92,246,0.3)]">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-indigo-600 text-2xl font-bold text-white shadow-lg shadow-primary-500/20">
             AI
           </div>
-          <h1 className="text-3xl font-bold text-[#FAFAFA] tracking-tight">Welcome Back</h1>
-          <p className="mt-2 text-sm text-[#A1A1AA]">Sign in to continue to AI Resume Analyzer</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Welcome Back</h1>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Sign in to continue to AI Resume Analyzer</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="rounded-[20px] bg-[#18181B] border border-[#3F3F46] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-          <div className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 p-8 shadow-xl shadow-slate-100 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+          <div className="space-y-5">
             <div>
-              <label className="mb-2 block text-sm font-medium text-[#FAFAFA]">Email</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Email</label>
               <div className="relative group">
-                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A1A1AA] group-focus-within:text-[#8B5CF6] transition-colors" size={18} />
+                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors" size={18} />
                 <input
                   {...register('email', { required: 'Email is required' })}
                   type="email"
-                  className="w-full rounded-xl border border-[#3F3F46] bg-[#27272A] pl-11 pr-4 py-3 text-sm text-[#FAFAFA] placeholder:text-[#A1A1AA] transition-all focus:border-[#8B5CF6] focus:outline-none focus:ring-1 focus:ring-[#8B5CF6] hover:border-[#A1A1AA]"
+                  className="w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/10 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:hover:border-slate-700"
                   placeholder="you@example.com"
                 />
               </div>
-              {errors.email && <p className="mt-1.5 text-xs text-[#EF4444]">{errors.email.message}</p>}
+              {errors.email && <p className="mt-1.5 text-xs text-red-500 dark:text-red-400">{errors.email.message}</p>}
             </div>
 
             <div>
               <div className="mb-2 flex items-center justify-between">
-                <label className="block text-sm font-medium text-[#FAFAFA]">Password</label>
-                <Link to="#" className="text-xs font-medium text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">Forgot Password?</Link>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Password</label>
+                <Link to="#" className="text-xs font-semibold text-primary-600 hover:text-primary-700 hover:underline dark:text-primary-400 dark:hover:text-primary-300 transition-colors">Forgot Password?</Link>
               </div>
               <div className="relative group">
-                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A1A1AA] group-focus-within:text-[#8B5CF6] transition-colors" size={18} />
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors" size={18} />
                 <input
                   {...register('password', { required: 'Password is required' })}
                   type={showPassword ? 'text' : 'password'}
-                  className="w-full rounded-xl border border-[#3F3F46] bg-[#27272A] pl-11 pr-11 py-3 text-sm text-[#FAFAFA] placeholder:text-[#A1A1AA] transition-all focus:border-[#8B5CF6] focus:outline-none focus:ring-1 focus:ring-[#8B5CF6] hover:border-[#A1A1AA]"
+                  className="w-full rounded-xl border border-slate-200 bg-white pl-11 pr-11 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/10 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:hover:border-slate-700"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#A1A1AA] hover:text-[#FAFAFA] focus:outline-none transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none transition-colors"
                 >
                   {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                 </button>
               </div>
-              {errors.password && <p className="mt-1.5 text-xs text-[#EF4444]">{errors.password.message}</p>}
+              {errors.password && <p className="mt-1.5 text-xs text-red-500 dark:text-red-400">{errors.password.message}</p>}
             </div>
 
             <div className="flex items-center">
               <input
                 type="checkbox"
                 id="remember"
-                className="h-4 w-4 rounded border-[#3F3F46] bg-[#27272A] text-[#8B5CF6] focus:ring-[#8B5CF6] focus:ring-offset-[#18181B]"
+                className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-850 text-primary-600 focus:ring-primary-500 focus:ring-offset-white dark:focus:ring-offset-slate-900"
               />
-              <label htmlFor="remember" className="ml-2 block text-sm text-[#A1A1AA]">
+              <label htmlFor="remember" className="ml-2 block text-sm font-semibold text-slate-500 dark:text-slate-400">
                 Remember me
               </label>
             </div>
@@ -100,9 +100,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center overflow-hidden rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] px-4 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:ring-offset-2 focus:ring-offset-[#18181B] active:scale-95 disabled:opacity-70 disabled:hover:scale-100"
+              className="group relative flex w-full justify-center overflow-hidden rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary-500/20 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900 active:scale-98 disabled:opacity-70 disabled:hover:scale-100"
             >
-              <div className="absolute inset-0 bg-white/20 opacity-0 transition-opacity group-hover:opacity-100" />
               {loading ? (
                 <div className="flex items-center gap-2">
                   <LoadingSpinner size="sm" />
@@ -114,19 +113,10 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <p className="mt-6 text-center text-sm text-[#A1A1AA]">
+          <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
             Don't have an account?{' '}
-            <Link to="/register" className="font-medium text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">Sign up</Link>
+            <Link to="/register" className="font-semibold text-primary-600 hover:text-primary-700 hover:underline dark:text-primary-400 dark:hover:text-primary-300 transition-colors">Sign up</Link>
           </p>
-
-          <div className="mt-8 rounded-xl bg-[#27272A]/50 border border-[#3F3F46]/50 p-4 text-xs text-[#A1A1AA]">
-            <p className="mb-1 font-semibold text-[#FAFAFA] flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#10B981]"></span>
-              Demo Admin Credentials
-            </p>
-            <p className="font-mono mt-1 select-all">admin@resumeanalyzer.com</p>
-            <p className="font-mono select-all">Admin@123456</p>
-          </div>
         </form>
       </div>
     </div>

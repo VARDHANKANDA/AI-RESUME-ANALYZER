@@ -48,8 +48,8 @@ export default function AdminPage() {
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold">Admin Panel</h1>
-        <p className="mt-1 text-gray-500">Manage users and view platform analytics</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">Admin Panel</h1>
+        <p className="mt-1 text-slate-500 dark:text-slate-400">Manage users and view platform analytics</p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -60,38 +60,38 @@ export default function AdminPage() {
       </div>
 
       <div className="card">
-        <h2 className="mb-4 text-lg font-semibold">Users ({users.length})</h2>
+        <h2 className="mb-4 text-lg font-bold text-slate-800 dark:text-slate-200">Users ({users.length})</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-sm border-collapse">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-800">
-                <th className="pb-3 font-medium">User</th>
-                <th className="pb-3 font-medium">Role</th>
-                <th className="pb-3 font-medium">Resumes</th>
-                <th className="pb-3 font-medium">Analyses</th>
-                <th className="pb-3 font-medium">Joined</th>
-                <th className="pb-3 font-medium">Actions</th>
+              <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-400 font-semibold">
+                <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">User</th>
+                <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Role</th>
+                <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Resumes</th>
+                <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Analyses</th>
+                <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Joined</th>
+                <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {users.map((user) => (
-                <tr key={user.id} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="py-3">
-                    <p className="font-medium">{user.full_name}</p>
-                    <p className="text-xs text-gray-500">{user.email}</p>
+                <tr key={user.id} className="hover:bg-slate-50/40 dark:hover:bg-slate-900/10 transition-colors">
+                  <td className="py-4">
+                    <p className="font-bold text-slate-850 dark:text-slate-200">{user.full_name}</p>
+                    <p className="text-xs text-slate-450 mt-0.5">{user.email}</p>
                   </td>
-                  <td className="py-3">
-                    <span className={`rounded-full px-2 py-0.5 text-xs ${user.is_admin ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800'}`}>
+                  <td className="py-4">
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${user.is_admin ? 'bg-red-50 text-red-700 border border-red-150 dark:bg-red-950/30 dark:text-red-400 dark:border-red-900/20' : 'bg-slate-100 text-slate-750 border border-slate-200 dark:bg-slate-850 dark:text-slate-300 dark:border-slate-700/60'}`}>
                       {user.is_admin ? 'Admin' : 'User'}
                     </span>
                   </td>
-                  <td className="py-3">{user.resume_count}</td>
-                  <td className="py-3">{user.analysis_count}</td>
-                  <td className="py-3 text-gray-500">{formatDate(user.created_at)}</td>
-                  <td className="py-3">
+                  <td className="py-4 text-slate-755 dark:text-slate-300 font-medium">{user.resume_count}</td>
+                  <td className="py-4 text-slate-755 dark:text-slate-300 font-medium">{user.analysis_count}</td>
+                  <td className="py-4 text-slate-500 dark:text-slate-455">{formatDate(user.created_at)}</td>
+                  <td className="py-4">
                     {!user.is_admin && (
-                      <button onClick={() => deleteUser(user.id)} className="text-red-500 hover:text-red-700">
-                        <FiTrash2 />
+                      <button onClick={() => deleteUser(user.id)} className="rounded-xl p-2.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer" aria-label="Delete User">
+                        <FiTrash2 size={16} />
                       </button>
                     )}
                   </td>

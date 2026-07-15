@@ -37,21 +37,21 @@ export default function CoverLetterPage() {
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold">Cover Letter Generator</h1>
-        <p className="mt-1 text-gray-500">AI-generated cover letters tailored to your resume and job</p>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">Cover Letter Generator</h1>
+        <p className="mt-1 text-slate-500 dark:text-slate-400">AI-generated cover letters tailored to your resume and job</p>
       </div>
 
-      <div className="card space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
+      <div className="card space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label className="mb-1.5 block text-sm font-medium">Select Resume</label>
-            <select value={selectedId || ''} onChange={(e) => setSelectedId(Number(e.target.value))} className="input-field">
+            <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Select Resume</label>
+            <select value={selectedId || ''} onChange={(e) => setSelectedId(Number(e.target.value))} className="input-field bg-white dark:bg-slate-950">
               {resumes.map((r) => <option key={r.id} value={r.id}>{r.original_filename}</option>)}
             </select>
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium">Tone</label>
-            <select value={tone} onChange={(e) => setTone(e.target.value)} className="input-field">
+            <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Tone</label>
+            <select value={tone} onChange={(e) => setTone(e.target.value)} className="input-field bg-white dark:bg-slate-950">
               <option value="professional">Professional</option>
               <option value="enthusiastic">Enthusiastic</option>
               <option value="formal">Formal</option>
@@ -60,21 +60,21 @@ export default function CoverLetterPage() {
           </div>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-medium">Job Description</label>
-          <textarea value={jobText} onChange={(e) => setJobText(e.target.value)} rows={6} className="input-field resize-none" placeholder="Paste job description..." />
+          <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Job Description</label>
+          <textarea value={jobText} onChange={(e) => setJobText(e.target.value)} rows={6} className="input-field resize-none bg-white dark:bg-slate-950" placeholder="Paste job description..." />
         </div>
-        <button onClick={generate} disabled={loading} className="btn-primary">
+        <button onClick={generate} disabled={loading} className="btn-primary py-3">
           {loading ? <LoadingSpinner size="sm" /> : <><FiMail /> Generate Cover Letter</>}
         </button>
       </div>
 
       {coverLetter && (
         <div className="card">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Generated Cover Letter</h2>
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">Generated Cover Letter</h2>
             <button onClick={() => { navigator.clipboard.writeText(coverLetter); toast.success('Copied!'); }} className="btn-secondary">Copy</button>
           </div>
-          <div className="whitespace-pre-wrap rounded-lg bg-gray-50 p-6 text-sm leading-relaxed dark:bg-gray-800">{coverLetter}</div>
+          <div className="whitespace-pre-wrap rounded-xl border border-slate-100 bg-slate-50/40 p-6 text-sm leading-relaxed dark:bg-slate-950 dark:border-slate-800/80 dark:text-slate-300">{coverLetter}</div>
         </div>
       )}
     </div>

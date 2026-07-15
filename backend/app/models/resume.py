@@ -2,8 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -22,7 +21,7 @@ class Resume(Base):
     raw_text: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     # Parsed sections stored as JSON
-    parsed_data: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    parsed_data: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     # name, email, phone, address, skills, education, experience, projects, certifications, languages, github, linkedin
 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

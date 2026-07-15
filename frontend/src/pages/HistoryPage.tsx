@@ -52,9 +52,9 @@ export default function HistoryPage() {
       <div className="space-y-6 animate-fade-in">
         <div className="flex items-center justify-between">
           <div>
-            <Link to="/history" className="text-sm text-primary-600 hover:underline">← Back to History</Link>
-            <h1 className="mt-2 text-2xl font-bold capitalize">{selected.analysis_type} Analysis</h1>
-            <p className="text-sm text-gray-500">{formatDate(selected.created_at)}</p>
+            <Link to="/history" className="text-sm font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300">← Back to History</Link>
+            <h1 className="mt-2 text-2xl font-extrabold text-slate-900 dark:text-white capitalize">{selected.analysis_type} Analysis</h1>
+            <p className="text-sm text-slate-400 mt-1">{formatDate(selected.created_at)}</p>
           </div>
           <button onClick={() => downloadReport(selected.id)} className="btn-secondary">
             <FiDownload /> Download PDF
@@ -69,9 +69,9 @@ export default function HistoryPage() {
           />
         </div>
         {selected.summary && (
-          <div className="card">
-            <h2 className="mb-2 font-semibold">Summary</h2>
-            <p className="text-gray-600 dark:text-gray-300">{selected.summary}</p>
+          <div className="card border-l-4 border-l-primary-500">
+            <h2 className="mb-2 font-bold text-slate-800 dark:text-slate-200">Summary</h2>
+            <p className="text-slate-650 leading-relaxed dark:text-slate-350 text-sm md:text-base">{selected.summary}</p>
           </div>
         )}
       </div>
@@ -82,12 +82,12 @@ export default function HistoryPage() {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Analysis History</h1>
-          <p className="mt-1 text-gray-500">View past resume analyses and comparisons</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">Analysis History</h1>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">View past resume analyses and comparisons</p>
         </div>
         <div className="flex items-center gap-2">
-          <FiFilter className="text-gray-400" />
-          <select value={filter} onChange={(e) => { setFilter(e.target.value); setPage(1); }} className="input-field w-auto">
+          <FiFilter className="text-slate-400" />
+          <select value={filter} onChange={(e) => { setFilter(e.target.value); setPage(1); }} className="input-field w-auto bg-white dark:bg-slate-950">
             <option value="">All Types</option>
             <option value="analyze">Analyze</option>
             <option value="compare">Compare</option>
@@ -99,31 +99,31 @@ export default function HistoryPage() {
         {loading ? (
           <div className="flex justify-center py-12"><LoadingSpinner /></div>
         ) : analyses.length === 0 ? (
-          <p className="py-8 text-center text-gray-500">No analysis history yet</p>
+          <p className="py-12 text-center text-slate-500 dark:text-slate-400 font-medium">No analysis history yet</p>
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
+              <table className="w-full text-left text-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-800">
-                    <th className="pb-3 font-medium">Type</th>
-                    <th className="pb-3 font-medium">ATS Score</th>
-                    <th className="pb-3 font-medium">Match %</th>
-                    <th className="pb-3 font-medium">Date</th>
-                    <th className="pb-3 font-medium">Actions</th>
+                  <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-400 font-semibold">
+                    <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Type</th>
+                    <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">ATS Score</th>
+                    <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Match %</th>
+                    <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Date</th>
+                    <th className="pb-3 font-semibold text-slate-700 dark:text-slate-300">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                   {analyses.map((a) => (
-                    <tr key={a.id} className="border-b border-gray-100 dark:border-gray-800">
-                      <td className="py-3 capitalize">{a.analysis_type}</td>
-                      <td className="py-3 font-medium">{Math.round(a.ats_score)}%</td>
-                      <td className="py-3">{a.match_percentage ? `${Math.round(a.match_percentage)}%` : '—'}</td>
-                      <td className="py-3 text-gray-500">{formatDate(a.created_at)}</td>
-                      <td className="py-3">
-                        <div className="flex gap-2">
-                          <Link to={`/history/${a.id}`} className="text-primary-600 hover:underline">View</Link>
-                          <button onClick={() => downloadReport(a.id)} className="text-gray-500 hover:text-primary-600">PDF</button>
+                    <tr key={a.id} className="hover:bg-slate-50/40 dark:hover:bg-slate-900/10 transition-colors">
+                      <td className="py-4 capitalize font-semibold text-slate-800 dark:text-slate-200">{a.analysis_type}</td>
+                      <td className="py-4 font-bold text-slate-800 dark:text-slate-200">{Math.round(a.ats_score)}%</td>
+                      <td className="py-4 text-slate-700 dark:text-slate-300 font-medium">{a.match_percentage ? `${Math.round(a.match_percentage)}%` : '—'}</td>
+                      <td className="py-4 text-slate-500 dark:text-slate-450">{formatDate(a.created_at)}</td>
+                      <td className="py-4">
+                        <div className="flex gap-3">
+                          <Link to={`/history/${a.id}`} className="text-primary-600 dark:text-primary-400 font-semibold hover:underline">View</Link>
+                          <button onClick={() => downloadReport(a.id)} className="text-slate-550 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 font-semibold transition-colors cursor-pointer">PDF</button>
                         </div>
                       </td>
                     </tr>
