@@ -12,6 +12,9 @@ import type {
 
 const getBaseURL = () => {
   const url = import.meta.env.VITE_API_URL || '/api';
+  if (import.meta.env.DEV) {
+    console.log("Vite API URL in development:", import.meta.env.VITE_API_URL);
+  }
   return url.endsWith('/') ? url : `${url}/`;
 };
 
